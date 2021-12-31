@@ -51,6 +51,13 @@ class _MyAppState extends State<MyApp> {
   int _questionIndex = 0;
   int _totalScore = 0;
 
+  void _resetQuiz() {
+    setState(() {
+      _questionIndex = 0;
+      _totalScore = 0;
+    });
+  }
+
   void _answerQuestion(int score) {
     _totalScore += score;
 
@@ -71,17 +78,16 @@ class _MyAppState extends State<MyApp> {
     // questions = []; // does not work if questions is a const
     return MaterialApp(
         home: Scaffold(
-      appBar: AppBar(
-        title: Text('My First App'),
-        backgroundColor: Color(0000000),
-      ),
-      body: _questionIndex < _questions.length
-          ? Quiz(
-              answerQuestion: _answerQuestion,
-              questionIndex: _questionIndex,
-              questions: _questions,
-            )
-          : Result(),
-    ));
+            appBar: AppBar(
+              title: Text('My First App'),
+              backgroundColor: Color(0000000),
+            ),
+            body: _questionIndex < _questions.length
+                ? Quiz(
+                    answerQuestion: _answerQuestion,
+                    questionIndex: _questionIndex,
+                    questions: _questions,
+                  )
+                : Result(_totalScore, _resetQuiz)));
   }
 }
